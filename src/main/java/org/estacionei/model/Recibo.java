@@ -1,0 +1,104 @@
+package org.estacionei.model;
+
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
+/**
+ * Recibo
+ */
+@javax.annotation.Generated(value = "org.estacionei.codegen.languages.SpringCodegen", date = "2019-09-20T20:35:29.312-03:00[America/Sao_Paulo]")
+
+public class Recibo   {
+  @JsonProperty("id_estacionamento")
+  private String idEstacionamento;
+
+  @JsonProperty("id")
+  private String id;
+
+  public Recibo idEstacionamento(String idEstacionamento) {
+    this.idEstacionamento = idEstacionamento;
+    return this;
+  }
+
+  /**
+   * Get idEstacionamento
+   * @return idEstacionamento
+  */
+  @ApiModelProperty(value = "")
+
+
+  public String getIdEstacionamento() {
+    return idEstacionamento;
+  }
+
+  public void setIdEstacionamento(String idEstacionamento) {
+    this.idEstacionamento = idEstacionamento;
+  }
+
+  public Recibo id(String id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+  */
+  @ApiModelProperty(value = "")
+
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Recibo recibo = (Recibo) o;
+    return Objects.equals(this.idEstacionamento, recibo.idEstacionamento) &&
+        Objects.equals(this.id, recibo.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(idEstacionamento, id);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class Recibo {\n");
+    
+    sb.append("    idEstacionamento: ").append(toIndentedString(idEstacionamento)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
+
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
+    }
+    return o.toString().replace("\n", "\n    ");
+  }
+}
+
