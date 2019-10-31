@@ -1,0 +1,552 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Estacionei"
+  description: "Estacionei é um app que te auxilia a estacionar em um estabelecimento e validar o ticket de forma pratica via app"
+  termsOfService: "http://estacionei.io/terms/"
+  contact:
+    email: "contato@estacionei.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags: 
+- name: "estacionamentos"
+- name: "tickets"
+  description: "dominio de vagas"
+- name: "clientes"
+  description: "dominio de vagas"
+- name: "pagamentos"
+  description: "dominio de vagas"
+- name: "recibos"
+  description: "dominio de vagas"
+paths:
+  /estacionamentos:
+    post:
+      tags:
+      - "estacionamentos"
+      summary: "cadastra um novo estabelecimento"
+      description: "cadastra um novo estabelecimento"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/estacionamento"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+  /estacionamentos/{id_estacionamento}:
+    get:
+      tags:
+      - "estacionamentos"
+      summary: "consulta um estacionamento estabelecimento"
+      description: "consulta um estacionamento estabelecimento"
+      parameters:
+      - name: "id_estacionamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "expand"
+        #vagas e entrada
+        in: "query"
+        required: false
+        schema:
+          type: "string"
+          enum: 
+            - vagas
+            - entradas
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estacionamento"
+        404:
+          description: "estacionamento não encontrado"
+  /estacionametos/{id_estacionamento}/vagas/{id_vaga}:
+    patch:
+      tags: 
+      - "estacionamentos"
+      summary: "atualiza status de uma vaga"
+      parameters:
+      - name: "id_estacionamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_vaga"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/vaga"
+      responses:
+        202:
+          description: "accepted"
+        404:
+          description: "id não encontrado"
+        400:
+          description: "bad request"
+  /tickets:
+    get:
+      tags:
+      - "tickets"
+      responses:
+        
+    post:
+      tags:
+      - "tickets"
+      summary: "gera um novo ticket"
+      description: "gera um novo ticket"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ticket"
+      responses:
+        201:
+          description: "gerado com sucesso"
+        400:
+          description: "requisição invalida"
+  /tickets/{id_ticket}:
+    get:
+      tags:
+      - "tickets"
+      summary: "busca um ticket"
+      description: "consulta um ticket"
+      parameters:
+      - name: "id_ticket"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ticket"
+        404:
+          description: "ticket não encontrado"
+  /tickets/{id_ticket}/calcular_pagamento:
+     post:
+      tags:
+      - "tickets"
+      summary: "busca um ticket"
+      description: "consulta um ticket"
+      parameters:
+      - name: "id_ticket"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ticket"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ticket"
+        404:
+          description: "ticket não encontrado"
+  /cliente:
+    post:
+      tags:
+      - "clientes"
+      summary: "cadastra um novo cliente"
+      description: "cadastra um novo cliente"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cliente"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+  /clientes/{id_cliente}:
+    get:
+      tags:
+      - "clientes"
+      summary: "busca um cliente"
+      description: "consulta um cliente"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+        404:
+          description: "ticket não encontrado"
+    patch:
+      tags: 
+      - "clientes"
+      summary: "atualiza saldo"
+      description: "atializa saldo de um cliete"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cliente"
+    
+      responses:
+        202:
+          description: "accepted"
+        404:
+          description: "id não encontrado"
+        400:
+          description: "bad request"
+    delete:
+      tags:
+      - "clientes"
+      summary: "deleta um veiculo"
+      description: "deleta um veiculo especifico"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        204:
+          description: "No content"
+        400:
+          description: "Bad request"
+  /clientes/{id_cliente}/veiculos:
+    post:
+      tags:
+      - "clientes"
+      summary: "cadastra novo veiculo"
+      description: "cadastra um novo veiculo de um determinado cliente"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/veiculo"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+  /clientes/{id_cliente}/veiculos/{id_veiculo}:
+    get:
+      tags:
+      - "clientes"
+      summary: "busca um veiculo"
+      description: "consulta um determinado veiculo"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_veiculo"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/veiculo"
+        404:
+          description: "veiculo não encontrado"
+    delete:
+      tags:
+      - "clientes"
+      summary: "deleta um veiculo"
+      description: "deleta um veiculo especifico"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_veiculo"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        204:
+          description: "No content"
+        400:
+          description: "Bad request"
+  /clientes/{id_cliente}/cartoes:
+    post:
+      tags:
+      - "clientes"
+      summary: "adiciona uma nova forma de pagamento"
+      description: "adiciona uma nova forma de pagamento"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cliente"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+  /clientes/{id_cliente}/cartoes/{id_cartao}:
+    delete:
+      tags:
+      - "clientes"
+      summary: "deleta uma forma de pagamento"
+      description: "deleta uma forma de pagamento especifica "
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_cartao"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        204:
+          description: "No content"
+        400:
+          description: "Bad request"
+  /pagamentos/pagar:
+    post:
+      tags:
+      - "pagamentos"
+      summary: "paga o ticket"
+      description: "faz o pagamento de um ticket"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/pagamento"
+      responses:
+        200:
+          description: "gera um post em recibos"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/recibo"
+  /recibos:
+    post:
+      tags:
+      - "recibos"
+      summary: "cria um novo recibo"
+      description: "cria um novo recibo apos um pagamento"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/recibo"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+  /recibos/{id_recibo}:
+    get:
+      tags:
+      - "recibos"
+      summary: "busca um recibo"
+      description: "consulta um determinado recibo"
+      parameters:
+      - name: "id_recibo"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/recibo"
+        404:
+          description: "veiculo não encontrado"
+components:
+  schemas:
+    estacionamento:
+      type: "object"
+      properties:
+        id_estacionanto:
+          type: "string"
+        nome:
+          type: "string"
+        endereco:
+          type: "string"
+        # mapa:
+        # type: "array"
+        # items:
+        #   $ref: "#/components/schemas/vaga"
+        entradas:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/localizacao"
+        vagas:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/vaga"
+    vaga:
+       type: "object"
+       properties:
+        id_vaga: 
+          type: "string"
+        status:
+          type: "boolean"
+        tipo_vaga:
+          type: "string"
+          enum: ["normal"]
+        preco_hora:
+          type: "string"
+        localizacao:
+          $ref: "#/components/schemas/localizacao"
+    localizacao:
+      type: "object"
+      properties:
+        latitude:
+          type: "string"
+        longitude:
+          type: "string"
+        andar:
+          type: "string"
+    cliente:
+      type: "object"
+      properties:
+        id_cliente:
+          description: "cpf/cnpj do cliente"
+          type: "string"
+        nome:
+          type: "string"
+        email:
+          type: "string"
+        tipo_cliente:
+          type: "string"
+        senha:
+          type: "string"
+        endereco:
+          $ref:  "#/components/schemas/endereco"
+        saldo:
+          type: "string"
+        cartoes:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/cartao_credito"
+    veiculo:
+      type: "object"
+      properties:
+        id_estacionamento: 
+          type: "string"
+    cartao_credito:
+      type: "object"
+      properties:
+        id_cartao_credito:
+          type: "string"
+        validade:
+          type: "string"
+        cvv:
+          type: "string"
+        nome:
+          type: "string"
+    ticket:
+      type: "object"
+      properties:
+        id_ticket: 
+          type: "string"
+        data_entrada:
+          type: "string"
+        hora_entrada:
+          type: "string"
+        veiculo:
+          $ref: "#/components/schemas/veiculo"
+    pagamento:
+      type: "object"
+      properties:
+        id_pagamento:
+          type: "string"
+        valor:
+          type: "string"
+        status:
+          type: "string"
+        forma_pagamento:
+          type: "string"
+          enum: 
+            - cash
+            - cartao_credito
+        codigo_forma_pagamento:
+          type: "string"
+    recibo:
+      type: "object"
+      properties:
+        id_recibo: 
+          type: "string"
+        data_pagamento:
+          type: "string"
+        hora_pagamento:
+          type: "string"
+        valor_pago:
+          type: "string"
+    endereco:
+      type: "object"
+      properties:
+        logradouro:
+          type: "string"
+        numero:
+          type: "string"
+        complemento:
+          type: "string"
+        bairro:
+          type: "string"
