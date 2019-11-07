@@ -97,11 +97,6 @@ paths:
         400:
           description: "bad request"
   /tickets:
-    get:
-      tags:
-      - "tickets"
-      responses:
-        
     post:
       tags:
       - "tickets"
@@ -396,6 +391,23 @@ paths:
           description: "criado com sucesso"
         400:
           description: "requisição invalida"
+    get:
+      tags: 
+      - "recibos"
+      summary: "Busca uma colecao de recibos"
+      parameters:
+      - name: "data_pagamento"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/recibo"
   /recibos/{id_recibo}:
     get:
       tags:
