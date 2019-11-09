@@ -195,7 +195,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/cliente"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/cliente"
         500:
           description: "erro interno"
   /clientes/{id_cliente}:
@@ -308,15 +310,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/veiculo"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/veiculo"
         500:
           description: "erro interno"
   /clientes/{id_cliente}/veiculos/{id_veiculo}:
     get:
       tags:
       - "clientes"
-      summary: "busca um veiculo"
-      description: "consulta um determinado veiculo"
+      summary: "Consulta um veiculo especifico"
+      description: "Utilizado pelo cliente para consultar as informações de um de um de seus veiculos"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -337,11 +341,13 @@ paths:
                 $ref: "#/components/schemas/veiculo"
         404:
           description: "veiculo não encontrado"
+        500: 
+          description: "erro interno"
     delete:
       tags:
       - "clientes"
-      summary: "deleta um veiculo"
-      description: "deleta um veiculo especifico"
+      summary: "Deleta um veiculo"
+      description: "Utilizado pelo cliente quando ele deseja excluir um de seus veiculos cadastrados"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -356,14 +362,16 @@ paths:
       responses:
         204:
           description: "No content"
-        400:
-          description: "Bad request"
+        404:
+          description: "veiculo não encontrado"
+        500:
+          description: "erro interno"
   /recibos:
     post:
       tags:
       - "recibos"
-      summary: "cria um novo recibo"
-      description: "cria um novo recibo apos um pagamento"
+      summary: "gera um novo recibo"
+      description: "Utilizado apos a confirmação de um pagamento para gerar um recibo"
       requestBody:
         required: true
         content:
@@ -375,10 +383,13 @@ paths:
           description: "criado com sucesso"
         400:
           description: "requisição invalida"
+        500:
+          description: "erro interno"
     get:
       tags: 
       - "recibos"
-      summary: "Busca uma colecao de recibos"
+      summary: "Consulta todos os recibos"
+      description: "utilizado pelo dono do estacionamento para gerar o fechamento do caixa"
       parameters:
       - name: "data_pagamento"
         in: "query"
@@ -392,6 +403,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/recibo"
+        500:
+          description: "erro interno"
 components:
   schemas:
     estacionamento:
