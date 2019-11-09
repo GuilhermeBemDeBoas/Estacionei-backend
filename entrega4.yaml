@@ -15,8 +15,6 @@ tags:
   description: "dominio de vagas"
 - name: "clientes"
   description: "dominio de vagas"
-- name: "pagamentos"
-  description: "dominio de vagas"
 - name: "recibos"
   description: "dominio de vagas"
 paths:
@@ -25,7 +23,7 @@ paths:
       tags:
       - "estacionamentos"
       summary: "cadastra um novo estabelecimento"
-      description: "cadastra um novo estabelecimento"
+      description: "Rota utilizado pelo dono do estacionamento para cadastrar um novo estacionamento"
       requestBody:
         required: true
         content:
@@ -34,14 +32,16 @@ paths:
               $ref: "#/components/schemas/estacionamento"
       responses:
         201:
-          description: "criado com sucesso"
+          description: "cadastrado com sucesso"
         400:
           description: "requisição invalida"
+        500:
+          description: "erro interno"
     get:
       tags:
       - "estacionamentos"
-      summary: "consulta um estacionamento estabelecimento"
-      description: "consulta um estacionamento estabelecimento"
+      summary: "consulta todos os estacionamentos"
+      description: "utilização interna apenas para gerar analises"
       parameters:
       - name: "id_estacionamento"
         in: "path"
@@ -54,30 +54,23 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/estacionamento"
-        404:
-          description: "estacionamento não encontrado"
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/estacionamento"
+        500:
+          description: "erro interno"
   /estacionamentos/{id_estacionamento}:
     get:
       tags:
       - "estacionamentos"
-      summary: "consulta um estacionamento estabelecimento"
-      description: "consulta um estacionamento estabelecimento"
+      summary: "consulta um estacionamento especifico"
+      description: "Rota utiliza pelo dono do estacionamento para consultar o estacionamento dele"
       parameters:
       - name: "id_estacionamento"
         in: "path"
         required: true
         schema:
           type: "string"
-      - name: "expand"
-        #vagas e entrada
-        in: "query"
-        required: false
-        schema:
-          type: "string"
-          enum: 
-            - vagas
-            - entradas
       responses:
         200:
           description: "OK"
@@ -87,10 +80,13 @@ paths:
                 $ref: "#/components/schemas/estacionamento"
         404:
           description: "estacionamento não encontrado"
+        500:
+          description: "erro interno"
     patch:
       tags: 
       - "estacionamentos"
-      summary: "atualiza status de uma vaga"
+      summary: "atualiza dados do estacionamento"
+      description: "Rota utilizado pelo dono do estacionamento caso haja necessiade de atualizar alguma informação do estacionamento"
       parameters:
       - name: "id_estacionamento"
         in: "path"
@@ -107,84 +103,49 @@ paths:
         204:
           description: "no content"
         404:
-          description: "id não encontrado"
+          description: "estacionamento nao encontrado"
         400:
-          description: "bad request"
-  /estacionametos/{id_estacionamento}/vagas/{id_vaga}:
-    patch:
-      tags: 
-      - "estacionamentos"
-      summary: "atualiza status de uma vaga"
-      parameters:
-      - name: "id_estacionamento"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      - name: "id_vaga"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/vaga"
-      responses:
-        202:
-          description: "accepted"
-        404:
-          description: "id não encontrado"
-        400:
-          description: "bad request"
-  /tickets:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+  /tickets/{id_ticket}/pagamentos:
     post:
       tags:
       - "tickets"
-      summary: "gera um novo ticket"
-      description: "gera um novo ticket"
+      summary: "Inicia um pagamento"
+      description: "Utilizado pelo cliente quando ele iniciar o fluxo de pagamento de um ticket"
+      parameters:
+      - name: "id_ticket"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
       requestBody:
         required: true
         content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ticket"
+            application/json:
+              schema:
+                $ref: "#/components/schemas/pagamento"
       responses:
         201:
           description: "gerado com sucesso"
         400:
           description: "requisição invalida"
-  /tickets/{id_ticket}:
-    get:
+        500:
+          description: "erro interno"
+  /tickets/{id_ticket}/pagamentos/{id_pagamento}:
+     patch:
       tags:
       - "tickets"
-      summary: "busca um ticket"
-      description: "consulta um ticket"
+      summary: "atualiza informacoes de um pagamento"
+      description: "Utilizado internamento para atualizar o status do pagamento assim que for finalizado"
       parameters:
       - name: "id_ticket"
         in: "path"
         required: true
         schema:
           type: "string"
-      responses:
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ticket"
-        404:
-          description: "ticket não encontrado"
-  /tickets/{id_ticket}/pagamentos:
-     post:
-      tags:
-      - "tickets"
-      summary: "busca um ticket"
-      description: "consulta um ticket"
-      parameters:
-      - name: "id_ticket"
+      - name: "id_pagamento"
         in: "path"
         required: true
         schema:
@@ -196,20 +157,20 @@ paths:
               schema:
                 $ref: "#/components/schemas/pagamento"
       responses:
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/pagamento"
+        204:
+          description: "no content"
         404:
-          description: "ticket não encontrado"
+          description: "pagamento não encontrado"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
   /clientes:
     post:
       tags:
       - "clientes"
       summary: "cadastra um novo cliente"
-      description: "cadastra um novo cliente"
+      description: "Utilizado pelo cliente (PJ/PF) para se cadastrar no sistema"
       requestBody:
         required: true
         content:
@@ -221,12 +182,28 @@ paths:
           description: "criado com sucesso"
         400:
           description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags:
+      - "clientes"
+      summary: "busca todos os clientes"
+      description: "Utilizado internamento para realizar analises"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+        500:
+          description: "erro interno"
   /clientes/{id_cliente}:
     get:
       tags:
       - "clientes"
-      summary: "busca um cliente"
-      description: "consulta um cliente"
+      summary: "Busca um cliente (PF/PJ) especifico"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para consultar seus dados cadastrais"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -241,12 +218,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/cliente"
         404:
-          description: "ticket não encontrado"
+          description: "cliente não encontrado"
+        500: 
+          description: "erro interno"
     patch:
       tags: 
       - "clientes"
-      summary: "atualiza saldo"
-      description: "atializa saldo de um cliete"
+      summary: "atualiza as informações de um cliente especifico"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para atualizar seus dados cadastrais"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -261,17 +240,19 @@ paths:
               $ref: "#/components/schemas/cliente"
     
       responses:
-        202:
-          description: "accepted"
+        204:
+          description: "no content"
         404:
-          description: "id não encontrado"
+          description: "cliente não encontrado"
         400:
-          description: "bad request"
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
     delete:
       tags:
       - "clientes"
-      summary: "deleta um veiculo"
-      description: "deleta um veiculo especifico"
+      summary: "deleta um cliente"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para excluir sua conta"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -281,14 +262,16 @@ paths:
       responses:
         204:
           description: "No content"
-        400:
-          description: "Bad request"
+        404:
+          description: "cliente não encontrado"
+        500:
+          description: "erro interno"
   /clientes/{id_cliente}/veiculos:
     post:
       tags:
       - "clientes"
       summary: "cadastra novo veiculo"
-      description: "cadastra um novo veiculo de um determinado cliente"
+      description: "Utilizado apenas pelo cliente do estacionamento para cadastrar um novo veiculo"
       parameters:
       - name: "id_cliente"
         in: "path"
@@ -306,6 +289,28 @@ paths:
           description: "criado com sucesso"
         400:
           description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags:
+      - "clientes"
+      summary: "Consulta todos os veiculos de um cliente"
+      description: "Utilizado pelo cliente do estacionamento para consultar seus veiculos cadastrados"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/veiculo"
+        500:
+          description: "erro interno"
   /clientes/{id_cliente}/veiculos/{id_veiculo}:
     get:
       tags:
@@ -353,51 +358,6 @@ paths:
           description: "No content"
         400:
           description: "Bad request"
-  /clientes/{id_cliente}/cartoes:
-    post:
-      tags:
-      - "clientes"
-      summary: "adiciona uma nova forma de pagamento"
-      description: "adiciona uma nova forma de pagamento"
-      parameters:
-      - name: "id_cliente"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/cliente"
-      responses:
-        201:
-          description: "criado com sucesso"
-        400:
-          description: "requisição invalida"
-  /clientes/{id_cliente}/cartoes/{id_cartao}:
-    delete:
-      tags:
-      - "clientes"
-      summary: "deleta uma forma de pagamento"
-      description: "deleta uma forma de pagamento especifica "
-      parameters:
-      - name: "id_cliente"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      - name: "id_cartao"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      responses:
-        204:
-          description: "No content"
-        400:
-          description: "Bad request"
   /recibos:
     post:
       tags:
@@ -432,27 +392,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/recibo"
-  /recibos/{id_recibo}:
-    get:
-      tags:
-      - "recibos"
-      summary: "busca um recibo"
-      description: "consulta um determinado recibo"
-      parameters:
-      - name: "id_recibo"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      responses:
-        200:
-          description: "OK"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/recibo"
-        404:
-          description: "veiculo não encontrado"
 components:
   schemas:
     estacionamento:
@@ -464,10 +403,6 @@ components:
           type: "string"
         endereco:
           type: "string"
-        # mapa:
-        # type: "array"
-        # items:
-        #   $ref: "#/components/schemas/vaga"
         entradas:
           type: "array"
           items:
@@ -524,7 +459,11 @@ components:
     veiculo:
       type: "object"
       properties:
-        id_estacionamento: 
+        id_veiculo: 
+          type: "string"
+        tipo_veiculo:
+          type: "string"
+        modelo:
           type: "string"
     cartao_credito:
       type: "object"
@@ -546,7 +485,7 @@ components:
           type: "string"
         hora_entrada:
           type: "string"
-        veiculo:
+        id_veiculo:
           $ref: "#/components/schemas/veiculo"
     pagamento:
       type: "object"
@@ -562,7 +501,7 @@ components:
           enum: 
             - cash
             - cartao_credito
-        codigo_forma_pagamento:
+        id_cartao_credito:
           type: "string"
     recibo:
       type: "object"
