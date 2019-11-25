@@ -7,6 +7,7 @@ public class Estacionamento {
 	
 	String nomeEstacionameto;
 	String enderecoEstacionamento;
+	ArrayList <Vaga> vagas;
 	
 	public String getNomeEstacionameto() {
 		return nomeEstacionameto;
@@ -20,13 +21,11 @@ public class Estacionamento {
 	public void setEnderecoEstacionamento(String enderecoEstacionamento) {
 		this.enderecoEstacionamento = enderecoEstacionamento;
 	}
-	public ArrayList<Vagas> getVagas() {
+	public ArrayList<Vaga> getVagas() {
 		return vagas;
 	}
-	public void setVagas(ArrayList<Vagas> vagas) {
+	public void setVagas(ArrayList<Vaga> vagas) {
 		this.vagas = vagas;
 	}
-	ArrayList <Vagas> vagas;
-	
 
 }

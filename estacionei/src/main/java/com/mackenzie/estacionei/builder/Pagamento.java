@@ -1,9 +1,12 @@
 package com.mackenzie.estacionei.builder;
 
+import java.time.LocalDateTime;
+
 public class Pagamento {
 
 	String valor;
 	StatusPagamento pagar;
+	LocalDateTime dataHoraPagamento;
 	
 	public String getValor() {
 		return valor;
@@ -17,6 +20,5 @@ public class Pagamento {
 	public void setPagar(StatusPagamento pagar) {
 		this.pagar = pagar;
 	}
-	
 	
 }

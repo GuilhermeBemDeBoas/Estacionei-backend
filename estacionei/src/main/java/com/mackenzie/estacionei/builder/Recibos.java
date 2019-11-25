@@ -1,10 +1,11 @@
 package com.mackenzie.estacionei.builder;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class Recibos {
 	
-	ArrayList <Ticket> tickets;
-	
+	Integer idRecibo;
+	LocalDateTime dataHora;
+	Integer valorPago;
 
 }
