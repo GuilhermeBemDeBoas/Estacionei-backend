@@ -10,10 +10,10 @@ import com.mackenzie.estacionei.controller.dto.ClienteDTO;
 import com.mackenzie.estacionei.entity.Cliente;
 import com.mackenzie.estacionei.entity.Veiculo;
 
-@RestController
+@RestController @RequestMapping("/clientes")
 public class ClienteController {
 	
-	@RequestMapping("/clientes")
+	
 	public List<ClienteDTO> listaCliente(){
 		Cliente cliente = new Cliente ("12345678910" , "Caleb", new Veiculo("TOP7777", "BUGATTI", "XIRON"));
 		
