@@ -15,8 +15,12 @@ public class Estacionamento {
 	private String nomeEstacionameto;
 	private String enderecoEstacionamento;
 	private ArrayList <Vaga> vagas;
-	
-	
+
+	public Estacionamento(String nomeEstacionameto, String enderecoEstacionamento) {
+		this.nomeEstacionameto = nomeEstacionameto;
+		this.enderecoEstacionamento = enderecoEstacionamento;
+	}
+
 	public Long getIdEstacionamento() {
 		return idEstacionamento;
 	}

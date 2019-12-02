@@ -87,7 +87,7 @@ public class ClienteController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> DeletearCliente(@PathVariable String cpf){
+	public ResponseEntity<?> deletarCliente(@PathVariable String cpf){
 		Optional<Cliente> optional = clienteRepository.findById(cpf);
 		if(optional.isPresent()) {
 			clienteRepository.deleteById(cpf);
