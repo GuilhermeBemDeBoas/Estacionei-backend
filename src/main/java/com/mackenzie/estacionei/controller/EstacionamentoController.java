@@ -24,12 +24,12 @@ public class EstacionamentoController {
     private EstacionamentoRepository estacionamentoRepository;
 
     @GetMapping
-    public List<EstacionamentoDTO> listaEstacionamento(@RequestParam(required = false) String cpf){
-        if(cpf == null) {
+    public List<EstacionamentoDTO> listaEstacionamento(@RequestParam(required = false) String nome){
+        if(nome == null) {
             List<Estacionamento> estacionamentos = estacionamentoRepository.findAll();
             return EstacionamentoDTO.parse(estacionamentos);
         }else {
-            List<Estacionamento> estacionamentos = estacionamentoRepository.findByCpf(cpf);
+            List<Estacionamento> estacionamentos = estacionamentoRepository.findByName(nome);
             return EstacionamentoDTO.parse(estacionamentos);
         }
     }
@@ -42,7 +42,7 @@ public class EstacionamentoController {
         Estacionamento estacionamento = form.converter();
         estacionamentoRepository.save(estacionamento);
 
-        URI uri = uriBuilder.path("/estacionamentos/{id}").buildAndExpand(estacionamento.getCpf()).toUri();
+        URI uri = uriBuilder.path("/estacionamentos/{id}").buildAndExpand(estacionamento.getIdEstacionamento()).toUri();
         return ResponseEntity.created(uri).body(new EstacionamentoDTO(estacionamento));
     }
 
