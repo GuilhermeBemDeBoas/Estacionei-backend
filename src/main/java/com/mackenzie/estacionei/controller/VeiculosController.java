@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/clientes/{idCliente}/veiculos")
-public class VeiculosContoller {
+public class VeiculosController {
     @Autowired
     private VeiculoRepository veiculoRepository;
 
