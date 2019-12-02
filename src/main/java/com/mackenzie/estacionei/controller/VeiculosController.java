@@ -1,15 +1,18 @@
 package com.mackenzie.estacionei.controller;
 
+import com.mackenzie.estacionei.controller.dto.DetalharVeiculoDTO;
 import com.mackenzie.estacionei.controller.dto.VeiculoDTO;
 import com.mackenzie.estacionei.controller.form.AtualizaVeiculoForm;
 import com.mackenzie.estacionei.controller.form.VeiculoForm;
 import com.mackenzie.estacionei.entity.Veiculo;
+import com.mackenzie.estacionei.repository.ClienteRepository;
 import com.mackenzie.estacionei.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -21,13 +24,16 @@ public class VeiculosController {
     @Autowired
     private VeiculoRepository veiculoRepository;
 
+    @Autowired
+    private ClienteRepository clienteRepository;
+
     @GetMapping
-    public List<VeiculoDTO> listaVeiculo(@PathVariable("idCliente") String placa){
+    public List<VeiculoDTO> listaVeiculo(@PathVariable("idCliente") String cpf,  String placa){
         if(placa == null) {
             List<Veiculo> veiculos = veiculoRepository.findAll();
             return VeiculoDTO.parse(veiculos);
         }else {
-            Veiculo veiculos = veiculoRepository.findByPlaca(placa);
+            List<Veiculo> veiculos = veiculoRepository.findByPlaca(placa);
             return VeiculoDTO.parse(veiculos);
         }
     }
@@ -35,7 +41,10 @@ public class VeiculosController {
     @PostMapping
     @Transactional
     public ResponseEntity<VeiculoDTO> gravarVeiculo(@PathVariable("idCliente") String cpf, @RequestBody @Valid VeiculoForm form, UriComponentsBuilder uriBuilder) {
-
+        Optional<?> cliente = clienteRepository.findById(cpf);
+        if(!cliente.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
 
         Veiculo veiculo = form.converter();
         veiculoRepository.save(veiculo);

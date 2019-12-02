@@ -4,9 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.mackenzie.estacionei.entity.Veiculo;
 
-public interface VeiculoRepository extends JpaRepository<Veiculo, String> {
+import java.util.List;
 
-	Veiculo findByPlaca(String placaVeiculo);
+public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
+
+	List<Veiculo> findByPlaca(String placaVeiculo);
 
 
 }
