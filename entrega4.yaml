@@ -1,0 +1,574 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Estacionei"
+  description: "Estacionei é um app que te auxilia a estacionar em um estabelecimento e validar o ticket de forma pratica via app"
+  termsOfService: "http://estacionei.io/terms/"
+  contact:
+    email: "contato@estacionei.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags: 
+- name: "estacionamentos"
+- name: "tickets"
+  description: "dominio de vagas"
+- name: "clientes"
+  description: "dominio de vagas"
+- name: "recibos"
+  description: "dominio de vagas"
+paths:
+  /estacionamentos:
+    post:
+      tags:
+      - "estacionamentos"
+      summary: "cadastra um novo estabelecimento"
+      description: "Rota utilizado pelo dono do estacionamento para cadastrar um novo estacionamento"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/estacionamento"
+      responses:
+        201:
+          description: "cadastrado com sucesso"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags:
+      - "estacionamentos"
+      summary: "consulta todos os estacionamentos"
+      description: "utilização interna apenas para gerar analises"
+      parameters:
+      - name: "id_estacionamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/estacionamento"
+        500:
+          description: "erro interno"
+  /estacionamentos/{id_estacionamento}:
+    get:
+      tags:
+      - "estacionamentos"
+      summary: "consulta um estacionamento especifico"
+      description: "Rota utiliza pelo dono do estacionamento para consultar o estacionamento dele"
+      parameters:
+      - name: "id_estacionamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/estacionamento"
+        404:
+          description: "estacionamento não encontrado"
+        500:
+          description: "erro interno"
+    patch:
+      tags: 
+      - "estacionamentos"
+      summary: "atualiza dados do estacionamento"
+      description: "Rota utilizado pelo dono do estacionamento caso haja necessiade de atualizar alguma informação do estacionamento"
+      parameters:
+      - name: "id_estacionamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/estacionamento"
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "estacionamento nao encontrado"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+  /tickets/{id_ticket}/pagamentos:
+    post:
+      tags:
+      - "tickets"
+      summary: "Inicia um pagamento"
+      description: "Utilizado pelo cliente quando ele iniciar o fluxo de pagamento de um ticket"
+      parameters:
+      - name: "id_ticket"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/pagamento"
+      responses:
+        201:
+          description: "gerado com sucesso"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+  /tickets/{id_ticket}/pagamentos/{id_pagamento}:
+     patch:
+      tags:
+      - "tickets"
+      summary: "atualiza informacoes de um pagamento"
+      description: "Utilizado internamento para atualizar o status do pagamento assim que for finalizado"
+      parameters:
+      - name: "id_ticket"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_pagamento"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/pagamento"
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "pagamento não encontrado"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+  /clientes:
+    post:
+      tags:
+      - "clientes"
+      summary: "cadastra um novo cliente"
+      description: "Utilizado pelo cliente (PJ/PF) para se cadastrar no sistema"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cliente"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags:
+      - "clientes"
+      summary: "busca todos os clientes"
+      description: "Utilizado internamento para realizar analises"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/cliente"
+        500:
+          description: "erro interno"
+  /clientes/{id_cliente}:
+    get:
+      tags:
+      - "clientes"
+      summary: "Busca um cliente (PF/PJ) especifico"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para consultar seus dados cadastrais"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cliente"
+        404:
+          description: "cliente não encontrado"
+        500: 
+          description: "erro interno"
+    patch:
+      tags: 
+      - "clientes"
+      summary: "atualiza as informações de um cliente especifico"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para atualizar seus dados cadastrais"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/cliente"
+    
+      responses:
+        204:
+          description: "no content"
+        404:
+          description: "cliente não encontrado"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+    delete:
+      tags:
+      - "clientes"
+      summary: "deleta um cliente"
+      description: "Utilizado pelo dono do estacionamento e pelo cliente do estacionameto para excluir sua conta"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        204:
+          description: "No content"
+        404:
+          description: "cliente não encontrado"
+        500:
+          description: "erro interno"
+  /clientes/{id_cliente}/veiculos:
+    post:
+      tags:
+      - "clientes"
+      summary: "cadastra novo veiculo"
+      description: "Utilizado apenas pelo cliente do estacionamento para cadastrar um novo veiculo"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/veiculo"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags:
+      - "clientes"
+      summary: "Consulta todos os veiculos de um cliente"
+      description: "Utilizado pelo cliente do estacionamento para consultar seus veiculos cadastrados"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/veiculo"
+        500:
+          description: "erro interno"
+  /clientes/{id_cliente}/veiculos/{id_veiculo}:
+    get:
+      tags:
+      - "clientes"
+      summary: "Consulta um veiculo especifico"
+      description: "Utilizado pelo cliente para consultar as informações de um de um de seus veiculos"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_veiculo"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/veiculo"
+        404:
+          description: "veiculo não encontrado"
+        500: 
+          description: "erro interno"
+    delete:
+      tags:
+      - "clientes"
+      summary: "Deleta um veiculo"
+      description: "Utilizado pelo cliente quando ele deseja excluir um de seus veiculos cadastrados"
+      parameters:
+      - name: "id_cliente"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "id_veiculo"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        204:
+          description: "No content"
+        404:
+          description: "veiculo não encontrado"
+        500:
+          description: "erro interno"
+  /recibos:
+    post:
+      tags:
+      - "recibos"
+      summary: "gera um novo recibo"
+      description: "Utilizado apos a confirmação de um pagamento para gerar um recibo"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/recibo"
+      responses:
+        201:
+          description: "criado com sucesso"
+        400:
+          description: "requisição invalida"
+        500:
+          description: "erro interno"
+    get:
+      tags: 
+      - "recibos"
+      summary: "Consulta todos os recibos"
+      description: "utilizado pelo dono do estacionamento para gerar o fechamento do caixa"
+      parameters:
+      - name: "data_pagamento"
+        in: "query"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/recibo"
+                additionalProperties:
+                  $ref: "#/components/schemas/summary"
+        500:
+          description: "erro interno"
+components:
+  schemas:
+    summary:
+      type: "object"
+      properties:
+        nome:
+          type: "string"
+        count:
+          type: "string"
+        valor:
+          type: "string"
+    BasicErrorModel:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          minimum: 100
+          maximum: 600
+    ExtendedErrorModel:
+      allOf:     # Combines the BasicErrorModel and the inline model
+        - $ref: '#/components/schemas/BasicErrorModel'
+        - type: object
+          required:
+            - rootCause
+          properties:
+            rootCause:
+              type: string
+    estacionamento:
+      type: "object"
+      properties:
+        id_estacionanto:
+          type: "string"
+        nome:
+          type: "string"
+        endereco:
+          type: "string"
+        entradas:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/localizacao"
+        vagas:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/vaga"
+    vaga:
+       type: "object"
+       properties:
+        id_vaga: 
+          type: "string"
+        status:
+          type: "boolean"
+        tipo_vaga:
+          type: "string"
+          enum: ["normal"]
+        preco_hora:
+          type: "string"
+        localizacao:
+          $ref: "#/components/schemas/localizacao"
+    localizacao:
+      type: "object"
+      properties:
+        latitude:
+          type: "string"
+        longitude:
+          type: "string"
+        andar:
+          type: "string"
+    cliente:
+      type: "object"
+      properties:
+        id_cliente:
+          description: "cpf/cnpj do cliente"
+          type: "string"
+        nome:
+          type: "string"
+        email:
+          type: "string"
+        tipo_cliente:
+          type: "string"
+        senha:
+          type: "string"
+        endereco:
+          $ref:  "#/components/schemas/endereco"
+        saldo:
+          type: "string"
+        cartoes:
+          type: "array"
+          items:
+            $ref: "#/components/schemas/cartao_credito"
+    veiculo:
+      type: "object"
+      properties:
+        id_veiculo: 
+          type: "string"
+        tipo_veiculo:
+          type: "string"
+        modelo:
+          type: "string"
+    cartao_credito:
+      type: "object"
+      properties:
+        id_cartao_credito:
+          type: "string"
+        validade:
+          type: "string"
+        cvv:
+          type: "string"
+        nome:
+          type: "string"
+    ticket:
+      type: "object"
+      properties:
+        id_ticket: 
+          type: "string"
+        data_entrada:
+          type: "string"
+        hora_entrada:
+          type: "string"
+        id_veiculo:
+          $ref: "#/components/schemas/veiculo"
+    pagamento:
+      type: "object"
+      properties:
+        id_pagamento:
+          type: "string"
+        valor:
+          type: "string"
+        status:
+          type: "string"
+        forma_pagamento:
+          type: "string"
+          enum: 
+            - cash
+            - cartao_credito
+        id_cartao_credito:
+          type: "string"
+    recibo:
+      type: "object"
+      properties:
+        id_recibo: 
+          type: "string"
+        data_pagamento:
+          type: "string"
+        hora_pagamento:
+          type: "string"
+        valor_pago:
+          type: "string"
+    endereco:
+      type: "object"
+      properties:
+        logradouro:
+          type: "string"
+        numero:
+          type: "string"
+        complemento:
+          type: "string"
+        bairro:
+          type: "string"
