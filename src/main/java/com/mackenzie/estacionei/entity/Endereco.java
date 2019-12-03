@@ -14,7 +14,23 @@ public class Endereco {
 	private String cep;
 	private int numero;
 	private String logradouro;
-	
+
+	public Endereco() {
+	}
+
+	public Endereco(String cep, int numero, String logradouro) {
+		this.cep = cep;
+		this.numero = numero;
+		this.logradouro = logradouro;
+	}
+
+	public Endereco(Long idEndereco, String cep, int numero, String logradouro) {
+		this.idEndereco = idEndereco;
+		this.cep = cep;
+		this.numero = numero;
+		this.logradouro = logradouro;
+	}
+
 	public Endereco(String cep) {
 		this.cep = cep;
 	}

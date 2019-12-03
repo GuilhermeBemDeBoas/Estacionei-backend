@@ -13,6 +13,7 @@ public class Cartao {
 	private String nomeCartao;
 
 	@ManyToOne
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 	
 	public String getNumCartao() {

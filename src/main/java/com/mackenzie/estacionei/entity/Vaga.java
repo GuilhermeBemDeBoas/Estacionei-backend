@@ -15,6 +15,7 @@ public class Vaga {
 	private String localizacao;
 
 	@ManyToOne
+	@JoinColumn(name = "id_estacionamento")
 	private Estacionamento estacionamento;
 	
 	public Long getIdVaga() {

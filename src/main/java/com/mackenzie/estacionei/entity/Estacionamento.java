@@ -1,6 +1,6 @@
 package com.mackenzie.estacionei.entity;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -12,9 +12,10 @@ public class Estacionamento {
 	private String nome;
 
 	@OneToMany
-	private ArrayList <Vaga> vagas;
+	private List<Vaga> vagas;
 
 	@OneToOne
+	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 
 	public Estacionamento(String nome) {
@@ -27,10 +28,10 @@ public class Estacionamento {
 	public void setIdEstacionamento(Long idEstacionamento) {
 		this.idEstacionamento = idEstacionamento;
 	}
-	public ArrayList<Vaga> getVagas() {
+	public List<Vaga> getVagas() {
 		return vagas;
 	}
-	public void setVagas(ArrayList<Vaga> vagas) {
+	public void setVagas(List<Vaga> vagas) {
 		this.vagas = vagas;
 	}
 

@@ -13,6 +13,7 @@ public class Veiculo {
 	private String modelo;
 
 	@ManyToOne
+	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
 	public Veiculo(String placa, String marca, String modelo) {

@@ -15,6 +15,7 @@ public class Cliente {
 	private String senha;
 
 	@OneToOne
+	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
 	@OneToMany
 	private List<Cartao> cartoes;

@@ -30,7 +30,7 @@ public class EstacionamentoController {
             List<Estacionamento> estacionamentos = estacionamentoRepository.findAll();
             return EstacionamentoDTO.parse(estacionamentos);
         }else {
-            List<Estacionamento> estacionamentos = estacionamentoRepository.findByName(nome);
+            List<Estacionamento> estacionamentos = estacionamentoRepository.findByNome(nome);
             return EstacionamentoDTO.parse(estacionamentos);
         }
     }
