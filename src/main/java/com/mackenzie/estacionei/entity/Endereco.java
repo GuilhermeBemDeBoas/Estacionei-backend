@@ -1,20 +1,30 @@
 package com.mackenzie.estacionei.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Endereco {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idEndereco;
 	private String cep;
 	private int numero;
-	private String Logradouro;
+	private String logradouro;
 	
 	public Endereco(String cep) {
 		this.cep = cep;
 	}
-	
+
+	public Long getIdEndereco() {
+		return idEndereco;
+	}
+	public void setIdEndereco(Long idEndereco) {
+		this.idEndereco = idEndereco;
+	}
 	public String getCep() {
 		return cep;
 	}
@@ -28,10 +38,10 @@ public class Endereco {
 		this.numero = numero;
 	}
 	public String getLogradouro() {
-		return Logradouro;
+		return logradouro;
 	}
 	public void setLogradouro(String logradouro) {
-		Logradouro = logradouro;
+		this.logradouro = logradouro;
 	}
 	
 }

@@ -17,7 +17,6 @@ public class Ticket {
 	
 	public Ticket (Cliente cliente) {
 		this.cliente = cliente;
-		this.veiculo = cliente.getVeiculo();
 	}
 	
 	

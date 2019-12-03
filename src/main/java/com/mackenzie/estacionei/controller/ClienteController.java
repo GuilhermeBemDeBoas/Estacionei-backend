@@ -52,7 +52,7 @@ public class ClienteController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ClienteDTO> gravarCliente(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-		Cliente cliente = form.converter(veiculoRepository);
+		Cliente cliente = form.converter();
 		clienteRepository.save(cliente);
 
 		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getCpf()).toUri();

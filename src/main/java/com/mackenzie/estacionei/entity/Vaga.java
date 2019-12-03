@@ -13,6 +13,9 @@ public class Vaga {
 	private StatusVaga status = StatusVaga.LIVRE;
 	private String precoHora;
 	private String localizacao;
+
+	@ManyToOne
+	private Estacionamento estacionamento;
 	
 	public Long getIdVaga() {
 		return idVaga;
@@ -39,4 +42,11 @@ public class Vaga {
 		this.localizacao = localizacao;
 	}
 
+	public Estacionamento getEstacionamento() {
+		return estacionamento;
+	}
+
+	public void setEstacionamento(Estacionamento estacionamento) {
+		this.estacionamento = estacionamento;
+	}
 }

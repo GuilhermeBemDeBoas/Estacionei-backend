@@ -1,9 +1,6 @@
 package com.mackenzie.estacionei.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Veiculo {
@@ -14,6 +11,9 @@ public class Veiculo {
 	private String placa;
 	private String marca;
 	private String modelo;
+
+	@ManyToOne
+	private Cliente cliente;
 
 	public Veiculo(String placa, String marca, String modelo) {
 		this.placa = placa;
