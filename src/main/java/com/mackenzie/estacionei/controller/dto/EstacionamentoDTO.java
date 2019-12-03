@@ -30,6 +30,10 @@ public class EstacionamentoDTO {
         return nome;
     }
 
+    public List<VagaDTO> getVagas() {
+        return vagas;
+    }
+
     public static List<EstacionamentoDTO> parse (List<Estacionamento> estacionamentos){
         return estacionamentos.stream().map(EstacionamentoDTO::new).collect(Collectors.toList());
     }

@@ -33,6 +33,14 @@ public class EstacionamentoForm {
         this.endereco = endereco;
     }
 
+    public List<VagaForm> getVagas() {
+        return vagas;
+    }
+
+    public void setVagas(List<VagaForm> vagas) {
+        this.vagas = vagas;
+    }
+
     public Estacionamento converter() {
         return new Estacionamento(nome, endereco.converter(), vagas.stream().map(vaga -> vaga.converter()).collect(Collectors.toList()));
     }
