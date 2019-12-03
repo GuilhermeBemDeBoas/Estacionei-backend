@@ -49,7 +49,8 @@ public class ClienteForm {
 	}
 	
 	public Cliente converter(VeiculoRepository veiculoRepository) {
-		Veiculo veiculo = veiculoRepository.findByPlaca(placaVeiculo);
-		return new Cliente(cpf, nome, email, veiculo);
+//		Veiculo veiculo = veiculoRepository.findByPlaca(placaVeiculo);
+//		return new Cliente(cpf, nome, email, veiculo);
+		throw new Error("");
 	}
 }

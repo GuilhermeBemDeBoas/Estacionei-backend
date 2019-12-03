@@ -9,12 +9,14 @@ import com.mackenzie.estacionei.entity.Cliente;
 
 public class ClienteDTO {
 	// a classe DTO sera o retorno ao cliente 
-	@Id
+
+	private Long idCliente;
 	private String cpf;
 	private String nome;
 	private String email;
 	
 	public ClienteDTO(Cliente cliente) {
+		this.idCliente = cliente.getIdCliente();
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();

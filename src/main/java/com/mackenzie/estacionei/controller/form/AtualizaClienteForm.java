@@ -26,8 +26,8 @@ public class AtualizaClienteForm {
 		this.email = email;
 	}
 	
-	public Cliente atualizar(String cpf, ClienteRepository clienteRepository) {
-		Cliente cliente = clienteRepository.getOne(cpf);
+	public Cliente atualizar(Long id, ClienteRepository clienteRepository) {
+		Cliente cliente = clienteRepository.getOne(id);
 		cliente.setNome(this.nome);
 		cliente.setEmail(this.email);
 		

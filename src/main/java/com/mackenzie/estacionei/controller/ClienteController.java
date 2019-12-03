@@ -52,8 +52,6 @@ public class ClienteController {
 	@PostMapping
 	@Transactional
 	public ResponseEntity<ClienteDTO> gravarCliente(@RequestBody @Valid ClienteForm form, UriComponentsBuilder uriBuilder) {
-		
-		
 		Cliente cliente = form.converter(veiculoRepository);
 		clienteRepository.save(cliente);
 
@@ -62,8 +60,8 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalharClienteDTO> detalharCliente(@PathVariable("id") String cpf) {
-		Optional<Cliente> cliente = clienteRepository.findById(cpf);
+	public ResponseEntity<DetalharClienteDTO> detalharCliente(@PathVariable("id") Long id) {
+		Optional<Cliente> cliente = clienteRepository.findById(id);
 		if(cliente.isPresent()) {
 			return ResponseEntity.ok(new DetalharClienteDTO(cliente.get()));
 		}
@@ -73,11 +71,11 @@ public class ClienteController {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable("id") String cpf, @RequestBody @Valid AtualizaClienteForm form){
-		Optional<Cliente> optional = clienteRepository.findById(cpf);
+	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable("id") Long id, @RequestBody @Valid AtualizaClienteForm form){
+		Optional<Cliente> optional = clienteRepository.findById(id);
 		if(optional.isPresent()) {
 			
-			Cliente cliente = form.atualizar(cpf, clienteRepository);
+			Cliente cliente = form.atualizar(id, clienteRepository);
 			return ResponseEntity.ok(new ClienteDTO(cliente));
 		}
 		
@@ -87,10 +85,10 @@ public class ClienteController {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	public ResponseEntity<?> deletarCliente(@PathVariable String cpf){
-		Optional<Cliente> optional = clienteRepository.findById(cpf);
+	public ResponseEntity<?> deletarCliente(@PathVariable Long id){
+		Optional<Cliente> optional = clienteRepository.findById(id);
 		if(optional.isPresent()) {
-			clienteRepository.deleteById(cpf);
+			clienteRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		
