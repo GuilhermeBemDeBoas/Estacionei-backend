@@ -10,6 +10,8 @@ public class AtualizaEstacionamentoForm {
     @NotNull
     @NotEmpty
     private String nome;
+    @NotNull
+    private AtualizaEnderecoForm endereco;
 
     public String getNome() {
         return nome;
@@ -19,9 +21,17 @@ public class AtualizaEstacionamentoForm {
         this.nome = nome;
     }
 
-    public Estacionamento atualizar(Long id, EstacionamentoRepository estacionamentoRepository) {
-        Estacionamento estacionamento = estacionamentoRepository.getOne(id);
+    public AtualizaEnderecoForm getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(AtualizaEnderecoForm endereco) {
+        this.endereco = endereco;
+    }
+
+    public Estacionamento atualizar(Estacionamento estacionamento) {
         estacionamento.setNome(this.nome);
+        estacionamento.setEndereco(this.endereco.atualizar(estacionamento.getEndereco()));
 
         return estacionamento;
     }
