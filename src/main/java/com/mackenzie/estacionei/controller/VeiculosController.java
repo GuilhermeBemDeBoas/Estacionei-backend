@@ -28,7 +28,7 @@ public class VeiculosController {
     private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<VeiculoDTO> listaVeiculo(@PathVariable("idCliente") String cpf,  String placa){
+    public List<VeiculoDTO> listaVeiculo(@PathVariable("idCliente") Long idCliente,  String placa){
         if(placa == null) {
             List<Veiculo> veiculos = veiculoRepository.findAll();
             return VeiculoDTO.parse(veiculos);
@@ -40,8 +40,8 @@ public class VeiculosController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<VeiculoDTO> gravarVeiculo(@PathVariable("idCliente") String cpf, @RequestBody @Valid VeiculoForm form, UriComponentsBuilder uriBuilder) {
-        Optional<?> cliente = clienteRepository.findById(cpf);
+    public ResponseEntity<VeiculoDTO> gravarVeiculo(@PathVariable("idCliente") Long idCliente, @RequestBody @Valid VeiculoForm form, UriComponentsBuilder uriBuilder) {
+        Optional<?> cliente = clienteRepository.findById(idCliente);
         if(!cliente.isPresent()) {
             return ResponseEntity.notFound().build();
         }
@@ -54,7 +54,7 @@ public class VeiculosController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalharVeiculoDTO> detalharVeiculo(@PathVariable("idCliente") String cpf, @PathVariable("id") Long id) {
+    public ResponseEntity<DetalharVeiculoDTO> detalharVeiculo(@PathVariable("idCliente") Long idCliente, @PathVariable("id") Long id) {
         Optional<Veiculo> veiculo = veiculoRepository.findById(id);
         if(veiculo.isPresent()) {
             return ResponseEntity.ok(new DetalharVeiculoDTO(veiculo.get()));
@@ -79,8 +79,8 @@ public class VeiculosController {
 
     @DeleteMapping("/{id}")
     @Transactional
-    public ResponseEntity<?> deletarVeiculo(@PathVariable("idCliente") String cpf, @PathVariable Long id){
-        Optional<Veiculo> optional = veiculoRepository.findById(id);
+    public ResponseEntity<?> deletarVeiculo(@PathVariable("idCliente") Long idCliente, @PathVariable Long id){
+        Optional<Veiculo> optional = veiculoRepository.findById(idCliente);
         if(optional.isPresent()) {
             veiculoRepository.deleteById(id);
             return ResponseEntity.ok().build();
