@@ -15,7 +15,10 @@ public class Cartao {
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
+
+	public Cartao() {
+	}
+
 	public String getNumCartao() {
 		return numCartao;
 	}

@@ -11,12 +11,15 @@ public class Estacionamento {
 	private Long idEstacionamento;
 	private String nome;
 
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Vaga> vagas;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
+
+	public Estacionamento() {
+	}
 
 	public Estacionamento(String nome) {
 		this.nome = nome;

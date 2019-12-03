@@ -1,5 +1,6 @@
 package com.mackenzie.estacionei.controller.form;
 
+import com.mackenzie.estacionei.entity.Cliente;
 import com.mackenzie.estacionei.entity.Veiculo;
 
 import javax.validation.constraints.NotEmpty;
@@ -38,7 +39,7 @@ public class VeiculoForm {
         this.placa = placa;
     }
 
-    public Veiculo converter() {
-        return new Veiculo(marca, modelo, placa);
+    public Veiculo converter(Cliente cliente) {
+        return new Veiculo(placa, marca, modelo, cliente);
     }
 }

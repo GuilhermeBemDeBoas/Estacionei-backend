@@ -16,10 +16,14 @@ public class Veiculo {
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
 
-	public Veiculo(String placa, String marca, String modelo) {
+	public Veiculo() {
+	}
+
+	public Veiculo(String placa, String marca, String modelo, Cliente cliente) {
 		this.placa = placa;
 		this.marca = marca;
 		this.modelo = modelo;
+		this.cliente = cliente;
 	}
 
 	public Long getIdVeiculo() {

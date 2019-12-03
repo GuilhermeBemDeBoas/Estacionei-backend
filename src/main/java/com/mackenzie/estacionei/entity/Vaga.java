@@ -17,7 +17,10 @@ public class Vaga {
 	@ManyToOne
 	@JoinColumn(name = "id_estacionamento")
 	private Estacionamento estacionamento;
-	
+
+	public Vaga() {
+	}
+
 	public Long getIdVaga() {
 		return idVaga;
 	}

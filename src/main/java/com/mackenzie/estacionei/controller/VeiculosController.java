@@ -4,6 +4,7 @@ import com.mackenzie.estacionei.controller.dto.DetalharVeiculoDTO;
 import com.mackenzie.estacionei.controller.dto.VeiculoDTO;
 import com.mackenzie.estacionei.controller.form.AtualizaVeiculoForm;
 import com.mackenzie.estacionei.controller.form.VeiculoForm;
+import com.mackenzie.estacionei.entity.Cliente;
 import com.mackenzie.estacionei.entity.Veiculo;
 import com.mackenzie.estacionei.repository.ClienteRepository;
 import com.mackenzie.estacionei.repository.VeiculoRepository;
@@ -30,9 +31,9 @@ public class VeiculosController {
     @GetMapping
     public List<VeiculoDTO> listaVeiculo(@PathVariable("idCliente") Long idCliente,  String placa){
         if(placa == null) {
-            List<Veiculo> veiculos = veiculoRepository.findAll();
+            List<Veiculo> veiculos = veiculoRepository.findByIdCliente(idCliente);
             return VeiculoDTO.parse(veiculos);
-        }else {
+        } else {
             List<Veiculo> veiculos = veiculoRepository.findByPlaca(placa);
             return VeiculoDTO.parse(veiculos);
         }
@@ -41,12 +42,12 @@ public class VeiculosController {
     @PostMapping
     @Transactional
     public ResponseEntity<VeiculoDTO> gravarVeiculo(@PathVariable("idCliente") Long idCliente, @RequestBody @Valid VeiculoForm form, UriComponentsBuilder uriBuilder) {
-        Optional<?> cliente = clienteRepository.findById(idCliente);
+        Optional<Cliente> cliente = clienteRepository.findById(idCliente);
         if(!cliente.isPresent()) {
             return ResponseEntity.notFound().build();
         }
 
-        Veiculo veiculo = form.converter();
+        Veiculo veiculo = form.converter(cliente.get());
         veiculoRepository.save(veiculo);
 
         URI uri = uriBuilder.path("/veiculos/{id}").buildAndExpand(veiculo.getPlaca()).toUri();
