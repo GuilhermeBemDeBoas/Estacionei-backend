@@ -11,7 +11,7 @@ public class Estacionamento {
 	private Long idEstacionamento;
 	private String nome;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "estacionamento")
 	private List<Vaga> vagas;
 
 	@OneToOne(cascade = CascadeType.ALL)

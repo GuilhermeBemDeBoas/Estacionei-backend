@@ -14,12 +14,18 @@ public class ClienteDTO {
 	private String cpf;
 	private String nome;
 	private String email;
+	private List<CartaoDTO> cartoes;
+	private List<VeiculoDTO> veiculos;
+	private EnderecoDTO endereco;
 	
 	public ClienteDTO(Cliente cliente) {
 		this.idCliente = cliente.getIdCliente();
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+		this.cartoes = CartaoDTO.parse(cliente.getCartoes());
+		this.veiculos = VeiculoDTO.parse(cliente.getVeiculos());
+		this.endereco = EnderecoDTO.parse(cliente.getEndereco());
 	}
 
 	public Long getIdCliente() {
@@ -37,8 +43,24 @@ public class ClienteDTO {
 		return email;
 	}
 
+	public List<CartaoDTO> getCartoes() {
+		return cartoes;
+	}
+
+	public List<VeiculoDTO> getVeiculos() {
+		return veiculos;
+	}
+
+	public EnderecoDTO getEndereco() {
+		return endereco;
+	}
+
 	public static List<ClienteDTO> parse (List<Cliente> clientes){
 		return clientes.stream().map(ClienteDTO::new).collect(Collectors.toList());
+	}
+
+	public static ClienteDTO parse(Cliente cliente) {
+		return new ClienteDTO(cliente);
 	}
 
 }

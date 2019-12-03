@@ -60,10 +60,10 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalharClienteDTO> detalharCliente(@PathVariable("id") Long id) {
+	public ResponseEntity<ClienteDTO> detalharCliente(@PathVariable("id") Long id) {
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 		if(cliente.isPresent()) {
-			return ResponseEntity.ok(new DetalharClienteDTO(cliente.get()));
+			return ResponseEntity.ok(ClienteDTO.parse(cliente.get()));
 		}
 		
 		return ResponseEntity.notFound().build();

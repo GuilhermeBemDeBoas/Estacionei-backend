@@ -17,9 +17,9 @@ public class Cliente {
 	@OneToOne
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
-	@OneToMany
+	@OneToMany(mappedBy = "cliente")
 	private List<Cartao> cartoes;
-	@OneToMany
+	@OneToMany(mappedBy = "cliente")
 	private List<Veiculo> veiculos;
 	
 	public Cliente() {
