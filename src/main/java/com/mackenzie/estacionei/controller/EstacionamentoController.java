@@ -38,8 +38,6 @@ public class EstacionamentoController {
     @PostMapping
     @Transactional
     public ResponseEntity<EstacionamentoDTO> gravarEstacionamento(@RequestBody @Valid EstacionamentoForm form, UriComponentsBuilder uriBuilder) {
-
-
         Estacionamento estacionamento = form.converter();
         estacionamentoRepository.save(estacionamento);
 
@@ -48,10 +46,10 @@ public class EstacionamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DetalharEstacionamentoDTO> detalharEstacionamento(@PathVariable("id") Long id) {
+    public ResponseEntity<EstacionamentoDTO> detalharEstacionamento(@PathVariable("id") Long id) {
         Optional<Estacionamento> estacionamento = estacionamentoRepository.findById(id);
         if(estacionamento.isPresent()) {
-            return ResponseEntity.ok(new DetalharEstacionamentoDTO(estacionamento.get()));
+            return ResponseEntity.ok(EstacionamentoDTO.parse(estacionamento.get()));
         }
 
         return ResponseEntity.notFound().build();
@@ -63,7 +61,7 @@ public class EstacionamentoController {
         Optional<Estacionamento> optional = estacionamentoRepository.findById(id);
         if(optional.isPresent()) {
 
-            Estacionamento estacionamento = form.atualizar(id, estacionamentoRepository);
+            Estacionamento estacionamento = form.atualizar(optional.get());
             return ResponseEntity.ok(new EstacionamentoDTO(estacionamento));
         }
 

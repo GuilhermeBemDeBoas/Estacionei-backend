@@ -1,6 +1,7 @@
 package com.mackenzie.estacionei.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,22 +15,23 @@ public class Cliente {
 	private String email;
 	private String senha;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "id_endereco")
 	private Endereco endereco;
-	@OneToMany
-	private List<Cartao> cartoes;
-	@OneToMany
-	private List<Veiculo> veiculos;
+	@OneToMany(mappedBy = "cliente")
+	private List<Cartao> cartoes = new ArrayList<>();
+	@OneToMany(mappedBy = "cliente")
+	private List<Veiculo> veiculos = new ArrayList<>();
 	
 	public Cliente() {
 		
 	}
 	
-	public Cliente(String cpf, String nome, String email) {
+	public Cliente(String cpf, String nome, String email, Endereco endereco) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
+		this.endereco = endereco;
 	}
 	
 	

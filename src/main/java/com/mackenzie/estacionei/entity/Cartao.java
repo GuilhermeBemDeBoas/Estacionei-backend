@@ -15,7 +15,26 @@ public class Cartao {
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")
 	private Cliente cliente;
-	
+
+	public Cartao() {
+	}
+
+	public Long getIdCartao() {
+		return idCartao;
+	}
+
+	public void setIdCartao(Long idCartao) {
+		this.idCartao = idCartao;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
 	public String getNumCartao() {
 		return numCartao;
 	}

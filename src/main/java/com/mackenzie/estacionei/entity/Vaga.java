@@ -17,7 +17,16 @@ public class Vaga {
 	@ManyToOne
 	@JoinColumn(name = "id_estacionamento")
 	private Estacionamento estacionamento;
-	
+
+	public Vaga() {
+	}
+
+	public Vaga(String precoHora, String localizacao) {
+		this.precoHora = precoHora;
+		this.localizacao = localizacao;
+		this.estacionamento = estacionamento;
+	}
+
 	public Long getIdVaga() {
 		return idVaga;
 	}

@@ -55,15 +55,15 @@ public class ClienteController {
 		Cliente cliente = form.converter();
 		clienteRepository.save(cliente);
 
-		URI uri = uriBuilder.path("/clientes/{id}").buildAndExpand(cliente.getCpf()).toUri();
+		URI uri = uriBuilder.path("/clientes").buildAndExpand(cliente.getCpf()).toUri();
 		return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<DetalharClienteDTO> detalharCliente(@PathVariable("id") Long id) {
+	public ResponseEntity<ClienteDTO> detalharCliente(@PathVariable("id") Long id) {
 		Optional<Cliente> cliente = clienteRepository.findById(id);
 		if(cliente.isPresent()) {
-			return ResponseEntity.ok(new DetalharClienteDTO(cliente.get()));
+			return ResponseEntity.ok(ClienteDTO.parse(cliente.get()));
 		}
 		
 		return ResponseEntity.notFound().build();
@@ -74,8 +74,7 @@ public class ClienteController {
 	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable("id") Long id, @RequestBody @Valid AtualizaClienteForm form){
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		if(optional.isPresent()) {
-			
-			Cliente cliente = form.atualizar(id, clienteRepository);
+			Cliente cliente = form.atualizar(optional.get());
 			return ResponseEntity.ok(new ClienteDTO(cliente));
 		}
 		

@@ -26,8 +26,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/clientes/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/clientes/*").permitAll()
 		.antMatchers(HttpMethod.PUT, "/clientes/*").permitAll()
-		.anyRequest().authenticated();
-
+		.anyRequest().permitAll(); // TODO FIX SECURITY
+		http.csrf().disable(); // TODO FIX SECURITY
 	}
 	
 	// configuracoes de recursos estaticos
