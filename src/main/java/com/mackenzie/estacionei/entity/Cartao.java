@@ -1,13 +1,19 @@
 package com.mackenzie.estacionei.entity;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 public class Cartao {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idCartao;
 	private String numCartao;
 	private String cvv;
 	private String nomeCartao;
+
+	@ManyToOne
+	private Cliente cliente;
 	
 	public String getNumCartao() {
 		return numCartao;

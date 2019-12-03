@@ -2,23 +2,20 @@ package com.mackenzie.estacionei.entity;
 
 import java.util.ArrayList;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Estacionamento {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEstacionamento;
-	private String nomeEstacionameto;
-	private String enderecoEstacionamento;
+	private String nome;
 	private ArrayList <Vaga> vagas;
 
+	@OneToOne
+	private Endereco endereco;
+
 	public Estacionamento(String nomeEstacionameto, String enderecoEstacionamento) {
-		this.nomeEstacionameto = nomeEstacionameto;
-		this.enderecoEstacionamento = enderecoEstacionamento;
 	}
 
 	public Long getIdEstacionamento() {
@@ -27,18 +24,6 @@ public class Estacionamento {
 	public void setIdEstacionamento(Long idEstacionamento) {
 		this.idEstacionamento = idEstacionamento;
 	}
-	public String getNomeEstacionameto() {
-		return nomeEstacionameto;
-	}
-	public void setNomeEstacionameto(String nomeEstacionameto) {
-		this.nomeEstacionameto = nomeEstacionameto;
-	}
-	public String getEnderecoEstacionamento() {
-		return enderecoEstacionamento;
-	}
-	public void setEnderecoEstacionamento(String enderecoEstacionamento) {
-		this.enderecoEstacionamento = enderecoEstacionamento;
-	}
 	public ArrayList<Vaga> getVagas() {
 		return vagas;
 	}
@@ -46,4 +31,19 @@ public class Estacionamento {
 		this.vagas = vagas;
 	}
 
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 }

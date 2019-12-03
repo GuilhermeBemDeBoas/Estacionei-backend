@@ -10,7 +10,7 @@ public class Veiculo {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long idVeiculo;
 	private String placa;
 	private String marca;
 	private String modelo;
@@ -19,6 +19,14 @@ public class Veiculo {
 		this.placa = placa;
 		this.marca = marca;
 		this.modelo = modelo;
+	}
+
+	public Long getIdVeiculo() {
+		return idVeiculo;
+	}
+
+	public void setIdVeiculo(Long idVeiculo) {
+		this.idVeiculo = idVeiculo;
 	}
 
 	public String getMarca() {

@@ -1,29 +1,34 @@
 package com.mackenzie.estacionei.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Cliente {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long idCliente;
 	private String cpf;
 	private String nome;
-	private String email;	
-	private String endereco;
+	private String email;
 	private String senha;
-	private Cartao cartao;
-	private Veiculo veiculo;
+
+	@OneToOne
+	private Endereco endereco;
+	@OneToMany
+	private List<Cartao> cartoes;
+	@OneToMany
+	private List<Veiculo> veiculos;
 	
 	public Cliente() {
 		
 	}
 	
-	public Cliente(String cpf, String nome, String email, Veiculo veiculo) {
+	public Cliente(String cpf, String nome, String email) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
-		this.veiculo = veiculo;
 	}
 	
 	
@@ -57,16 +62,6 @@ public class Cliente {
 	}
 
 
-	public String getEndereco() {
-		return endereco;
-	}
-
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-
 	public String getSenha() {
 		return senha;
 	}
@@ -76,25 +71,35 @@ public class Cliente {
 		this.senha = senha;
 	}
 
-
-	public Cartao getCartao() {
-		return cartao;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-
-	public void setCartao(Cartao cartao) {
-		this.cartao = cartao;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-
-	public Veiculo getVeiculo() {
-		return veiculo;
+	public Long getIdCliente() {
+		return idCliente;
 	}
 
-
-	public void setVeiculo(Veiculo veiculo) {
-		this.veiculo = veiculo;
+	public void setIdCliente(Long idCliente) {
+		this.idCliente = idCliente;
 	}
 
+	public List<Cartao> getCartoes() {
+		return cartoes;
+	}
 
+	public void setCartoes(List<Cartao> cartoes) {
+		this.cartoes = cartoes;
+	}
+
+	public List<Veiculo> getVeiculos() {
+		return veiculos;
+	}
+
+	public void setVeiculos(List<Veiculo> veiculos) {
+		this.veiculos = veiculos;
+	}
 }

@@ -1,13 +1,10 @@
 package com.mackenzie.estacionei.entity;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.mackenzie.estacionei.enums.StatusVaga;
 
+@Entity
 public class Vaga {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
