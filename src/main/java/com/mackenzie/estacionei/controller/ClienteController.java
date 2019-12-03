@@ -55,7 +55,7 @@ public class ClienteController {
 		Cliente cliente = form.converter();
 		clienteRepository.save(cliente);
 
-		URI uri = uriBuilder.path("/clientes").buildAndExpand(cliente.getCpf()).toUri();
+		URI uri = uriBuilder.path("/clientes").buildAndExpand(cliente.getIdCliente()).toUri();
 		return ResponseEntity.created(uri).body(new ClienteDTO(cliente));
 	}
 	

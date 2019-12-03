@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VagaDTO {
-    private String precoHora;
+    private Double precoHora;
     private String localizacao;
 
     public VagaDTO(Vaga vaga) {
@@ -14,7 +14,7 @@ public class VagaDTO {
         this.localizacao = vaga.getLocalizacao();
     }
 
-    public String getPrecoHora() {
+    public Double getPrecoHora() {
         return precoHora;
     }
 

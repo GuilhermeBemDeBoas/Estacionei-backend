@@ -11,7 +11,7 @@ public class Vaga {
 	private Long idVaga;
 	@Enumerated(EnumType.STRING)
 	private StatusVaga status = StatusVaga.LIVRE;
-	private String precoHora;
+	private Double precoHora;
 	private String localizacao;
 
 	@ManyToOne
@@ -21,7 +21,7 @@ public class Vaga {
 	public Vaga() {
 	}
 
-	public Vaga(String precoHora, String localizacao) {
+	public Vaga(Double precoHora, String localizacao) {
 		this.precoHora = precoHora;
 		this.localizacao = localizacao;
 		this.estacionamento = estacionamento;
@@ -39,10 +39,10 @@ public class Vaga {
 	public void setStatus(StatusVaga status) {
 		this.status = status;
 	}
-	public String getPrecoHora() {
+	public Double getPrecoHora() {
 		return precoHora;
 	}
-	public void setPrecoHora(String precoHora) {
+	public void setPrecoHora(Double precoHora) {
 		this.precoHora = precoHora;
 	}
 	public String getLocalizacao() {

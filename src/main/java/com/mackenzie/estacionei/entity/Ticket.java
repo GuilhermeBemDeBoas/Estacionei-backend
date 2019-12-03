@@ -2,19 +2,14 @@ package com.mackenzie.estacionei.entity;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.Id;
-
 import com.mackenzie.estacionei.enums.StatusTicket;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
+@Entity
 public class Ticket {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idTicket;
 	private LocalDateTime data;
 	private Double valor;
@@ -29,10 +24,16 @@ public class Ticket {
 	@JoinColumn(name = "id_vaga")
 	private Vaga vaga;
 
+	@Enumerated(EnumType.STRING)
 	private StatusTicket statusTicket = StatusTicket.PENDENTE;
-	
-	public Ticket (Cliente cliente) {
+
+	public Ticket() {
+	}
+
+	public Ticket (Cliente cliente, Veiculo veiculo, Vaga vaga) {
 		this.cliente = cliente;
+		this.vaga = vaga;
+		this.veiculo = veiculo;
 	}
 
 	public Double getValor() {

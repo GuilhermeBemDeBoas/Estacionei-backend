@@ -7,16 +7,16 @@ import javax.validation.constraints.NotNull;
 
 public class VagaForm {
     @NotNull @NotEmpty
-    private String precoHora;
+    private Double precoHora;
     @NotNull
     @NotEmpty
     private String localizacao;
 
-    public String getPrecoHora() {
+    public Double getPrecoHora() {
         return precoHora;
     }
 
-    public void setPrecoHora(String precoHora) {
+    public void setPrecoHora(Double precoHora) {
         this.precoHora = precoHora;
     }
 

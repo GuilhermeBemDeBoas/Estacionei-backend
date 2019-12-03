@@ -9,6 +9,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    @Query("SELECT t FROM Ticket t WHERE t.date BETWEEN :startDate AND :endDate")
+    @Query("SELECT t FROM Ticket t WHERE t.data BETWEEN :startDate AND :endDate")
     List<Ticket> getByDateRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 }

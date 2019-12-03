@@ -37,6 +37,10 @@ public class TicketDTO {
     }
 
     public static List<TicketDTO> parse (List<Ticket> tickets){
-        return tickets.stream().map(TickerDTO::new).collect(Collectors.toList());
+        return tickets.stream().map(TicketDTO::new).collect(Collectors.toList());
+    }
+
+    public static TicketDTO parse (Ticket ticket){
+        return new TicketDTO(ticket);
     }
 }
