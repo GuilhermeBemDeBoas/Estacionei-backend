@@ -74,8 +74,7 @@ public class ClienteController {
 	public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable("id") Long id, @RequestBody @Valid AtualizaClienteForm form){
 		Optional<Cliente> optional = clienteRepository.findById(id);
 		if(optional.isPresent()) {
-			
-			Cliente cliente = form.atualizar(id, clienteRepository);
+			Cliente cliente = form.atualizar(optional.get());
 			return ResponseEntity.ok(new ClienteDTO(cliente));
 		}
 		

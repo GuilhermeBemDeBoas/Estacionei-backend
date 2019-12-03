@@ -36,8 +36,7 @@ public class AtualizaClienteForm {
 		this.endereco = endereco;
 	}
 
-	public Cliente atualizar(Long id, ClienteRepository clienteRepository) {
-		Cliente cliente = clienteRepository.getOne(id);
+	public Cliente atualizar(Cliente cliente) {
 		cliente.setNome(this.nome);
 		cliente.setEmail(this.email);
 		cliente.setEndereco(endereco.atualizar(cliente.getEndereco()));
