@@ -12,6 +12,8 @@ public class AtualizaClienteForm {
 	private String nome;
 	@NotNull @NotEmpty
 	private String email;
+	@NotNull
+	private AtualizaEnderecoForm endereco;
 	
 	public String getNome() {
 		return nome;
@@ -25,11 +27,20 @@ public class AtualizaClienteForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	public AtualizaEnderecoForm getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(AtualizaEnderecoForm endereco) {
+		this.endereco = endereco;
+	}
+
 	public Cliente atualizar(Long id, ClienteRepository clienteRepository) {
 		Cliente cliente = clienteRepository.getOne(id);
 		cliente.setNome(this.nome);
 		cliente.setEmail(this.email);
+		cliente.setEndereco(endereco.atualizar(cliente.getEndereco()));
 		
 		return cliente;
 	}

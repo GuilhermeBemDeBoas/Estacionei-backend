@@ -18,6 +18,8 @@ public class ClienteForm {
 	private String nome;
 	@NotNull @NotEmpty
 	private String email;
+	@NotNull
+	private EnderecoForm endereco;
 
 	public String getCpf() {
 		return cpf;
@@ -37,8 +39,16 @@ public class ClienteForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
+	public EnderecoForm getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoForm endereco) {
+		this.endereco = endereco;
+	}
+
 	public Cliente converter() {
-		return new Cliente(cpf, nome, email);
+		return new Cliente(cpf, nome, email, endereco.converter());
 	}
 }
