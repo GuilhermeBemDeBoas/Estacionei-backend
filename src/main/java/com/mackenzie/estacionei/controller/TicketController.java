@@ -17,6 +17,6 @@ public class TicketController {
 
     @PostMapping
     public ResponseEntity<TicketDTO> gravarTicket() {
-        throw new Error("");
+
     }
 }

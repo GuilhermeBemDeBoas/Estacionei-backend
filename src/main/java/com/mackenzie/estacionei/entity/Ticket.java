@@ -26,8 +26,8 @@ public class Ticket {
 	@JoinColumn(name = "id_veiculo")
 	private Veiculo veiculo;
 	@ManyToOne
-	@JoinColumn(name = "id_estacionamento")
-	private Estacionamento estacionamento;
+	@JoinColumn(name = "id_vaga")
+	private Vaga vaga;
 
 	private StatusTicket statusTicket = StatusTicket.PENDENTE;
 	
@@ -84,11 +84,11 @@ public class Ticket {
 		return idTicket;
 	}
 
-	public Estacionamento getEstacionamento() {
-		return estacionamento;
+	public Vaga getVaga() {
+		return vaga;
 	}
 
-	public void setEstacionamento(Estacionamento estacionamento) {
-		this.estacionamento = estacionamento;
+	public void setVaga(Vaga vaga) {
+		this.vaga = vaga;
 	}
 }
