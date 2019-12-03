@@ -22,9 +22,10 @@ public class Estacionamento {
 	public Estacionamento() {
 	}
 
-	public Estacionamento(String nome, Endereco endereco) {
+	public Estacionamento(String nome, Endereco endereco, List<Vaga> vagas) {
 		this.nome = nome;
 		this.endereco = endereco;
+		this.vagas = vagas;
 	}
 
 	public Long getIdEstacionamento() {

@@ -9,11 +9,13 @@ public class EstacionamentoDTO {
     private Long idEstacionamento;
     private String nome;
     private EnderecoDTO endereco;
+    private List<VagaDTO> vagas;
 
     public EstacionamentoDTO(Estacionamento estacionamento) {
         this.idEstacionamento = estacionamento.getIdEstacionamento();
         this.nome = estacionamento.getNome();
         this.endereco = EnderecoDTO.parse(estacionamento.getEndereco());
+        this.vagas = VagaDTO.parse(estacionamento.getVagas());
     }
 
     public Long getIdEstacionamento() {

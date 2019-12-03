@@ -5,6 +5,8 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class EstacionamentoForm {
 
@@ -12,6 +14,8 @@ public class EstacionamentoForm {
     private String nome;
     @NotNull
     private EnderecoForm endereco;
+    @NotNull
+    private List<VagaForm> vagas;
 
     public String getNome() {
         return nome;
@@ -30,6 +34,6 @@ public class EstacionamentoForm {
     }
 
     public Estacionamento converter() {
-        return new Estacionamento(nome, endereco.converter());
+        return new Estacionamento(nome, endereco.converter(), vagas.stream().map(vaga -> vaga.converter()).collect(Collectors.toList()));
     }
 }
