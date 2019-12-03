@@ -10,8 +10,6 @@ public class EstacionamentoForm {
 
     @NotNull @NotEmpty
     private String nome;
-    @NotNull @NotEmpty
-    private String endereco;
 
     public String getNome() {
         return nome;
@@ -21,15 +19,7 @@ public class EstacionamentoForm {
         this.nome = nome;
     }
 
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
-
     public Estacionamento converter() {
-        return new Estacionamento(nome, endereco);
+        return new Estacionamento(nome);
     }
 }

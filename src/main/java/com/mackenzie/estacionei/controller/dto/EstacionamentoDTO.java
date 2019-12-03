@@ -6,38 +6,20 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EstacionamentoDTO {
-    private Long id;
+    private Long idEstacionamento;
     private String nome;
-    private String endereco;
 
     public EstacionamentoDTO(Estacionamento estacionamento) {
-        this.id = estacionamento.getIdEstacionamento();
-        this.nome = estacionamento.getNomeEstacionameto();
-        this.endereco = estacionamento.getEnderecoEstacionamento();
+        this.idEstacionamento = estacionamento.getIdEstacionamento();
+        this.nome = estacionamento.getNome();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public Long getIdEstacionamento() {
+        return idEstacionamento;
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
     }
 
     public static List<EstacionamentoDTO> parse (List<Estacionamento> estacionamentos){

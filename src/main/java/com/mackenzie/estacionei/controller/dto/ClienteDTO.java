@@ -21,7 +21,11 @@ public class ClienteDTO {
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
 	}
-	
+
+	public Long getIdCliente() {
+		return idCliente;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}

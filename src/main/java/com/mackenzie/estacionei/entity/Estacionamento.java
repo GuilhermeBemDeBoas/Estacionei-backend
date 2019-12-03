@@ -10,12 +10,15 @@ public class Estacionamento {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idEstacionamento;
 	private String nome;
+
+	@OneToMany
 	private ArrayList <Vaga> vagas;
 
 	@OneToOne
 	private Endereco endereco;
 
-	public Estacionamento(String nomeEstacionameto, String enderecoEstacionamento) {
+	public Estacionamento(String nome) {
+		this.nome = nome;
 	}
 
 	public Long getIdEstacionamento() {

@@ -18,17 +18,7 @@ public class ClienteForm {
 	private String nome;
 	@NotNull @NotEmpty
 	private String email;
-	@NotNull @NotEmpty
-	private String placaVeiculo;
-	
-	
-	public String getPlacaVeiculo() {
-		return placaVeiculo;
-	}
-	public void setPlacaVeiculo(String placaVeiculo) {
-		this.placaVeiculo = placaVeiculo;
-	
-	}
+
 	public String getCpf() {
 		return cpf;
 	}
@@ -48,9 +38,7 @@ public class ClienteForm {
 		this.email = email;
 	}
 	
-	public Cliente converter(VeiculoRepository veiculoRepository) {
-//		Veiculo veiculo = veiculoRepository.findByPlaca(placaVeiculo);
-//		return new Cliente(cpf, nome, email, veiculo);
-		throw new Error("");
+	public Cliente converter() {
+		return new Cliente(cpf, nome, email);
 	}
 }
