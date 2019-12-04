@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
 
-	List<Veiculo> findByPlaca(String placaVeiculo);
+	List<Veiculo> findByPlacaContainingIgnoreCase(String placaVeiculo);
 
 	@Query("SELECT v FROM Veiculo v WHERE v.cliente.idCliente = :idCliente")
 	List<Veiculo> findByIdCliente(@Param("idCliente") Long idCliente);

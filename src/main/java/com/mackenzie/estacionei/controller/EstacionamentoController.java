@@ -1,6 +1,5 @@
 package com.mackenzie.estacionei.controller;
 
-import com.mackenzie.estacionei.controller.dto.DetalharEstacionamentoDTO;
 import com.mackenzie.estacionei.controller.dto.EstacionamentoDTO;
 import com.mackenzie.estacionei.controller.form.AtualizaEstacionamentoForm;
 import com.mackenzie.estacionei.controller.form.EstacionamentoForm;
@@ -30,7 +29,7 @@ public class EstacionamentoController {
             List<Estacionamento> estacionamentos = estacionamentoRepository.findAll();
             return EstacionamentoDTO.parse(estacionamentos);
         }else {
-            List<Estacionamento> estacionamentos = estacionamentoRepository.findByNome(nome);
+            List<Estacionamento> estacionamentos = estacionamentoRepository.findByNomeContainingIgnoreCase(nome);
             return EstacionamentoDTO.parse(estacionamentos);
         }
     }

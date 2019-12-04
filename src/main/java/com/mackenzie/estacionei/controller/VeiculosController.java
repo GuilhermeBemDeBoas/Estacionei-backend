@@ -34,7 +34,7 @@ public class VeiculosController {
             List<Veiculo> veiculos = veiculoRepository.findByIdCliente(idCliente);
             return VeiculoDTO.parse(veiculos);
         } else {
-            List<Veiculo> veiculos = veiculoRepository.findByPlaca(placa);
+            List<Veiculo> veiculos = veiculoRepository.findByPlacaContainingIgnoreCase(placa);
             return VeiculoDTO.parse(veiculos);
         }
     }

@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mackenzie.estacionei.entity.Recibo;
 import com.mackenzie.estacionei.repository.ReciboRepository;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

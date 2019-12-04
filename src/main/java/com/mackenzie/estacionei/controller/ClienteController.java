@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.mackenzie.estacionei.controller.dto.ClienteDTO;
-import com.mackenzie.estacionei.controller.dto.DetalharClienteDTO;
 import com.mackenzie.estacionei.controller.form.AtualizaClienteForm;
 import com.mackenzie.estacionei.controller.form.ClienteForm;
 import com.mackenzie.estacionei.entity.Cliente;
@@ -39,12 +38,12 @@ public class ClienteController {
 	private VeiculoRepository veiculoRepository;
 	
 	@GetMapping
-	public List<ClienteDTO> listaCliente(@RequestParam(required = false) String cpf){
-		if(cpf == null) {
+	public List<ClienteDTO> listaCliente(@RequestParam(required = false) String nome){
+		if(nome == null) {
 			List<Cliente> clientes = clienteRepository.findAll();
 			return ClienteDTO.parse(clientes);
 		}else {
-			List<Cliente> clientes = clienteRepository.findByCpf(cpf);
+			List<Cliente> clientes = clienteRepository.findByNomeContainingIgnoreCase(nome);
 			return ClienteDTO.parse(clientes);
 		}
 	}
