@@ -42,3 +42,8 @@ INSERT INTO veiculo (id_veiculo, placa, marca, modelo, id_cliente) VALUES
 (2, 'ABC1236', 'TESLA', 'MODEL X', 2),
 (3, 'ABC1237', 'TESLA', 'MODEL Y', 3),
 (4, 'ABC1238', 'TESLA', 'CYBERTRUCK', 4);
+
+INSERT INTO recibo (id_recibo, data_hora, valor_pago) VALUES
+(0, '2019-12-03T00:01:01.000', 30.50),
+(1, '2019-12-02T00:01:01.000', 30.50),
+(2, '2019-12-03T00:01:01.000', 31.50);

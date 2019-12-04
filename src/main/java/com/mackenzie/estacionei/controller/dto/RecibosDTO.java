@@ -1,6 +1,6 @@
 package com.mackenzie.estacionei.controller.dto;
 
-import com.mackenzie.estacionei.entity.Recibos;
+import com.mackenzie.estacionei.entity.Recibo;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +10,7 @@ public class RecibosDTO {
     private LocalDateTime dataHora;
     private Integer valorPago;
 
-    public RecibosDTO(Recibos recibos) {
+    public RecibosDTO(Recibo recibo) {
         this.idRecibo = idRecibo;
         this.dataHora = dataHora;
         this.valorPago = valorPago;
@@ -39,7 +39,7 @@ public class RecibosDTO {
 	this.valorPago = valorPago;
     }
     
-     public static List<RecibosDTO> parse (List<Recibos> recibos){
+     public static List<RecibosDTO> parse (List<Recibo> recibos){
         return recibos.stream().map(RecibosDTO::new).collect(Collectors.toList());
     }
 }

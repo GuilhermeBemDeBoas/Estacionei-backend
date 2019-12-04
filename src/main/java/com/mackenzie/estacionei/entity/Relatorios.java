@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class Relatorios {
 	
-	private ArrayList<Recibos> recibos;
+	private ArrayList<Recibo> recibos;
 	private LocalDateTime data;
 	private LocalDateTime horaPagamento;
 
@@ -25,11 +25,11 @@ public class Relatorios {
 		this.horaPagamento = horaPagamento;
 	}
 
-	public ArrayList<Recibos> getRecibos() {
+	public ArrayList<Recibo> getRecibos() {
 		return recibos;
 	}
 
-	public void setRecibos(ArrayList<Recibos> recibos) {
+	public void setRecibos(ArrayList<Recibo> recibos) {
 		this.recibos = recibos;
 	}
 
