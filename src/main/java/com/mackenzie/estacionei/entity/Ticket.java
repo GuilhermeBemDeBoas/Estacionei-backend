@@ -11,8 +11,8 @@ public class Ticket {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idTicket;
-	private LocalDateTime data;
-	private Double valor;
+	private LocalDateTime data = LocalDateTime.now();
+	private Double valor = 0.0;
 
 	@ManyToOne
 	@JoinColumn(name = "id_cliente")

@@ -1,15 +1,12 @@
 package com.mackenzie.estacionei.controller;
 
+import com.mackenzie.estacionei.controller.dto.RecibosDTO;
 import com.mackenzie.estacionei.controller.dto.TicketDTO;
+import com.mackenzie.estacionei.controller.form.PagamentoForm;
 import com.mackenzie.estacionei.controller.form.TicketForm;
-import com.mackenzie.estacionei.entity.Cliente;
-import com.mackenzie.estacionei.entity.Ticket;
-import com.mackenzie.estacionei.entity.Vaga;
-import com.mackenzie.estacionei.entity.Veiculo;
-import com.mackenzie.estacionei.repository.ClienteRepository;
-import com.mackenzie.estacionei.repository.TicketRepository;
-import com.mackenzie.estacionei.repository.VagaRepository;
-import com.mackenzie.estacionei.repository.VeiculoRepository;
+import com.mackenzie.estacionei.entity.*;
+import com.mackenzie.estacionei.enums.StatusTicket;
+import com.mackenzie.estacionei.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +33,9 @@ public class TicketController {
     @Autowired
     private VagaRepository vagaRepository;
 
+    @Autowired
+    private ReciboRepository reciboRepository;
+
     @PostMapping
     public ResponseEntity<TicketDTO> gravarTicket(@RequestBody @Valid TicketForm form, UriComponentsBuilder uriBuilder) {
         Optional<Cliente> cliente = clienteRepository.findById(form.getIdCliente());
@@ -47,6 +47,7 @@ public class TicketController {
         }
 
         Ticket ticket = form.converter(cliente.get(), veiculo.get(), vaga.get());
+        ticketRepository.save(ticket);
         URI uri = uriBuilder.path("/tickets").buildAndExpand(ticket.getIdTicket()).toUri();
 
         return ResponseEntity.created(uri).body(new TicketDTO(ticket));
@@ -71,10 +72,36 @@ public class TicketController {
 
         Ticket ticket = optional.get();
         LocalDateTime now = LocalDateTime.now();
-        Long hoursQuantity = Duration.between(now, ticket.getData()).toHours();
+        Long hoursQuantity = (long) Math.ceil(((double) Duration.between(ticket.getData(), now).toMillis()) / (360 * 1000));
         Double valorTotal = hoursQuantity * ticket.getVaga().getPrecoHora();
         ticket.setValor(valorTotal);
+        ticketRepository.save(ticket);
 
         return ResponseEntity.ok(TicketDTO.parse(ticket));
+    }
+
+    @PatchMapping("/{id}/pagar")
+    public ResponseEntity<RecibosDTO> pagar(@PathVariable("id") Long id, @RequestBody @Valid PagamentoForm pagamento) {
+        Optional<Ticket> optional = ticketRepository.findById(id);
+        if(!optional.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Ticket ticket = optional.get();
+        LocalDateTime now = LocalDateTime.now();
+        Long hoursQuantity = (long) Math.ceil(((double) Duration.between(ticket.getData(), now).toMillis()) / (360 * 1000));
+        Double valorTotal = hoursQuantity * ticket.getVaga().getPrecoHora();
+
+        if (ticket.getValor() > pagamento.getValor() && valorTotal > pagamento.getValor()) {
+            return ResponseEntity.badRequest().build();
+        }
+
+        Recibo recibo = new Recibo(LocalDateTime.now(), pagamento.getValor());
+        reciboRepository.save(recibo);
+
+        ticket.setStatusTicket(StatusTicket.PAGO);
+        ticketRepository.save(ticket);
+
+        return ResponseEntity.ok(RecibosDTO.parse(recibo));
     }
 }

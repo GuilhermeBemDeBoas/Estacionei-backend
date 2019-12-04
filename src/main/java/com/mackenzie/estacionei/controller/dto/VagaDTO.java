@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class VagaDTO {
+    private Long idVaga;
     private Double precoHora;
     private String localizacao;
 
     public VagaDTO(Vaga vaga) {
+        this.idVaga = vaga.getIdVaga();
         this.precoHora = vaga.getPrecoHora();
         this.localizacao = vaga.getLocalizacao();
     }
@@ -20,6 +22,10 @@ public class VagaDTO {
 
     public String getLocalizacao() {
         return localizacao;
+    }
+
+    public Long getIdVaga() {
+        return idVaga;
     }
 
     public static List<VagaDTO> parse (List<Vaga> vagas){

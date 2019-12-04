@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 public class RecibosDTO {
     private Long idRecibo;
     private LocalDateTime dataHora;
-    private Integer valorPago;
+    private Double valorPago;
 
     public RecibosDTO(Recibo recibo) {
-        this.idRecibo = idRecibo;
-        this.dataHora = dataHora;
-        this.valorPago = valorPago;
+        this.idRecibo = recibo.getIdRecibo();
+        this.dataHora = recibo.getDataHora();
+        this.valorPago = recibo.getValorPago();
     }
     
     public RecibosDTO() {
@@ -32,14 +32,18 @@ public class RecibosDTO {
     public void setDataHora(LocalDateTime dataHora) {
 	this.dataHora = dataHora;
     }
-    public Integer getValorPago() {
+    public Double getValorPago() {
 	return valorPago;
     }
-    public void setValorPago(Integer valorPago) {
+    public void setValorPago(Double valorPago) {
 	this.valorPago = valorPago;
     }
     
      public static List<RecibosDTO> parse (List<Recibo> recibos){
         return recibos.stream().map(RecibosDTO::new).collect(Collectors.toList());
+    }
+
+    public static RecibosDTO parse(Recibo recibo) {
+        return new RecibosDTO(recibo);
     }
 }

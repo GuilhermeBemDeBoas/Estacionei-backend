@@ -1,5 +1,7 @@
 package com.mackenzie.estacionei.controller;
 
+import com.mackenzie.estacionei.controller.dto.RelatorioDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import com.mackenzie.estacionei.entity.Recibo;
 import com.mackenzie.estacionei.repository.ReciboRepository;
@@ -19,7 +21,7 @@ public class RecibosController {
     private ReciboRepository recibosRepository;
     
     @GetMapping
-    public Double fechamentoDiario(@RequestParam(required = true, name = "data") String dataString){
+    public ResponseEntity<RelatorioDTO> fechamentoDiario(@RequestParam(required = true, name = "data") String dataString){
         LocalDate data = LocalDate.parse(dataString);
         List<Recibo> recibos = recibosRepository.findByData(data);
 
@@ -28,6 +30,6 @@ public class RecibosController {
             total += recibos.get(i).getValorPago();
         }
 
-        return total;
+        return  ResponseEntity.ok(new RelatorioDTO(total, recibos.size()));
     }
 }

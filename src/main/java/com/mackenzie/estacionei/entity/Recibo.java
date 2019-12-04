@@ -13,9 +13,16 @@ public class Recibo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idRecibo;
 	private LocalDateTime dataHora;
-	private Integer valorPago;
-	
-	
+	private Double valorPago;
+
+	public Recibo() {
+	}
+
+	public Recibo(LocalDateTime dataHora, Double valorPago) {
+		this.dataHora = dataHora;
+		this.valorPago = valorPago;
+	}
+
 	public Long getIdRecibo() {
 		return idRecibo;
 	}
@@ -28,10 +35,10 @@ public class Recibo {
 	public void setDataHora(LocalDateTime dataHora) {
 		this.dataHora = dataHora;
 	}
-	public Integer getValorPago() {
+	public Double getValorPago() {
 		return valorPago;
 	}
-	public void setValorPago(Integer valorPago) {
+	public void setValorPago(Double valorPago) {
 		this.valorPago = valorPago;
 	}
 
