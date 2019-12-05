@@ -27,11 +27,12 @@ public class Cliente {
 		
 	}
 	
-	public Cliente(String cpf, String nome, String email, Endereco endereco) {
+	public Cliente(String cpf, String nome, String email, String senha, Endereco endereco) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.email = email;
 		this.endereco = endereco;
+		this.senha = senha;
 	}
 	
 	

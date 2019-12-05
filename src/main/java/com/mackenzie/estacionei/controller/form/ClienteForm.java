@@ -8,6 +8,10 @@ import org.hibernate.validator.constraints.Length;
 import com.mackenzie.estacionei.entity.Cliente;
 import com.mackenzie.estacionei.entity.Veiculo;
 import com.mackenzie.estacionei.repository.VeiculoRepository;
+import org.springframework.util.DigestUtils;
+
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class ClienteForm {
 	// a classe form eh para diferenciar a classe de retorno de get e post
@@ -18,6 +22,8 @@ public class ClienteForm {
 	private String nome;
 	@NotNull @NotEmpty
 	private String email;
+	@NotNull @NotEmpty @Length(min = 8)
+	private String senha;
 	@NotNull
 	private EnderecoForm endereco;
 
@@ -40,6 +46,14 @@ public class ClienteForm {
 		this.email = email;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public EnderecoForm getEndereco() {
 		return endereco;
 	}
@@ -49,6 +63,8 @@ public class ClienteForm {
 	}
 
 	public Cliente converter() {
-		return new Cliente(cpf, nome, email, endereco.converter());
+		String senha = DigestUtils.md5DigestAsHex(this.senha.getBytes(StandardCharsets.UTF_8));
+
+		return new Cliente(cpf, nome, email, senha, endereco.converter());
 	}
 }

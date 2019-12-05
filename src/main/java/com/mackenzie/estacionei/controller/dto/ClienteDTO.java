@@ -14,6 +14,7 @@ public class ClienteDTO {
 	private String cpf;
 	private String nome;
 	private String email;
+	private String senha;
 	private List<CartaoDTO> cartoes;
 	private List<VeiculoDTO> veiculos;
 	private EnderecoDTO endereco;
@@ -23,6 +24,7 @@ public class ClienteDTO {
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.email = cliente.getEmail();
+		this.senha = cliente.getSenha();
 		this.cartoes = CartaoDTO.parse(cliente.getCartoes());
 		this.veiculos = VeiculoDTO.parse(cliente.getVeiculos());
 		this.endereco = EnderecoDTO.parse(cliente.getEndereco());
@@ -37,6 +39,10 @@ public class ClienteDTO {
 	}
 	public String getNome() {
 		return nome;
+	}
+
+	public String getSenha() {
+		return senha;
 	}
 
 	public String getEmail() {
