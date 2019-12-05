@@ -4,7 +4,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.mackenzie.estacionei.entity.Cliente;
-import com.mackenzie.estacionei.repository.ClienteRepository;
 
 public class AtualizaClienteForm {
 

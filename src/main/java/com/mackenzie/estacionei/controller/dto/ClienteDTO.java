@@ -3,8 +3,6 @@ package com.mackenzie.estacionei.controller.dto;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.data.annotation.Id;
-
 import com.mackenzie.estacionei.entity.Cliente;
 
 public class ClienteDTO {

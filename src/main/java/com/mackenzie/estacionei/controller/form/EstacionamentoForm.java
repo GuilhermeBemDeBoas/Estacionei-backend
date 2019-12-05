@@ -1,7 +1,6 @@
 package com.mackenzie.estacionei.controller.form;
 
 import com.mackenzie.estacionei.entity.Estacionamento;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

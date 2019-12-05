@@ -2,7 +2,6 @@ package com.mackenzie.estacionei.repository;
 
 import com.mackenzie.estacionei.entity.Estacionamento;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 

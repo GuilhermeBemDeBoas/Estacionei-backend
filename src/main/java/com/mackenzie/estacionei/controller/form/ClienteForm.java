@@ -6,12 +6,9 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import com.mackenzie.estacionei.entity.Cliente;
-import com.mackenzie.estacionei.entity.Veiculo;
-import com.mackenzie.estacionei.repository.VeiculoRepository;
 import org.springframework.util.DigestUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 public class ClienteForm {
 	// a classe form eh para diferenciar a classe de retorno de get e post
